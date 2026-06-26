@@ -54,7 +54,7 @@ Queue-Management-System/
 1. Clone the repository.
 
 ```bash
-https://github.com/rubyy-n0/Queue-Management-System.git
+git clone https://github.com/rubyy-n0/Queue-Management-System.git
 ```
 
 2. Open the project folder.
