@@ -133,6 +133,8 @@ body.tv-display {
     animation: floatingAnimation 6s ease-in-out infinite;
 }
 
+
+
 @keyframes floatingAnimation {
     0% { transform: translateY(0px); }
     50% { transform: translateY(-15px); }
