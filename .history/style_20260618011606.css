@@ -1,0 +1,111 @@
+/* Color Palette & Custom Utility Tokens */
+:root {
+    --cq-blue-dark: #0A192F;
+    --cq-blue-primary: #0052CC;
+    --cq-blue-light: #E6F0FF;
+    --cq-orange-primary: #FF6B00;
+    --cq-orange-glow: rgba(255, 107, 0, 0.15);
+    --cq-glass-bg: rgba(255, 255, 255, 0.85);
+}
+
+/* Overall Body Theme */
+body {
+    background: linear-gradient(135deg, #F4F7FC 0%, #E6EEFA 100%);
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    color: var(--cq-blue-dark);
+    min-height: 100vh;
+}
+
+/* TV Specific Display Styles */
+body.tv-display {
+    background: radial-gradient(circle at center, #102A43 0%, #06152B 100%);
+    color: #FFFFFF;
+}
+
+.tv-container {
+    background: rgba(16, 42, 67, 0.6);
+    backdrop-filter: blur(12px);
+    border: 2px solid rgba(255, 107, 0, 0.3);
+    border-radius: 24px;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4), 0 0 40px var(--cq-orange-glow);
+}
+
+.tv-number {
+    font-size: 8.5rem;
+    font-weight: 900;
+    letter-spacing: 2px;
+    color: var(--cq-orange-primary);
+    text-shadow: 0 0 30px rgba(255, 107, 0, 0.6);
+}
+
+/* Modern Card Layouts */
+.cq-card {
+    background: var(--cq-glass-bg);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(0, 82, 204, 0.1);
+    border-radius: 18px;
+    box-shadow: 0 10px 30px rgba(10, 25, 47, 0.05);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.cq-card:hover {
+    box-shadow: 0 15px 35px rgba(0, 82, 204, 0.1);
+}
+
+/* Accent Header Brands */
+.brand-text-orange { color: var(--cq-orange-primary) !important; }
+.brand-text-blue { color: var(--cq-blue-primary) !important; }
+
+/* Custom Buttons matching brand rule */
+.btn-cq-primary {
+    background-color: var(--cq-blue-primary);
+    border: none;
+    color: white;
+    font-weight: 600;
+}
+.btn-cq-primary:hover:not(:disabled) {
+    background-color: #0043A4;
+    color: white;
+}
+
+.btn-cq-orange {
+    background-color: var(--cq-orange-primary);
+    border: none;
+    color: white;
+    font-weight: 700;
+}
+.btn-cq-orange:hover:not(:disabled) {
+    background-color: #E05E00;
+    color: white;
+}
+
+/* Live stats indicators */
+.stat-box-blue {
+    background-color: var(--cq-blue-light);
+    border-left: 5px solid var(--cq-blue-primary);
+    border-radius: 12px;
+}
+
+.stat-box-orange {
+    background-color: rgba(255, 107, 0, 0.08);
+    border-left: 5px solid var(--cq-orange-primary);
+    border-radius: 12px;
+}
+
+/* User Ticket display numbers */
+.queue-number {
+    font-size: 4rem;
+    font-weight: 800;
+    color: var(--cq-blue-primary);
+}
+
+/* Force the ticket column layout to stay visible as a grid item */
+#ticketDisplay {
+    display: flex !important; /* Forces the card to stay visible side-by-side */
+}
+
+/* Optional: Softly fade out or dim the inner text elements if a ticket hasn't been generated yet */
+#ticketDisplay.d-none {
+    opacity: 0.65;
+    pointer-events: none;
+}

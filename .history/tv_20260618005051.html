@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CloudQ - Waiting Display</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body style="background-color: #ffffff;">
+
+    <div class="container-fluid p-5">
+        <div class="row align-items-center mb-5 pb-4 border-bottom">
+            <div class="col-md-6">
+                <h1 class="fw-bold m-0 text-dark display-5">Cloud<span style="color: var(--brand-blue);">Q</span> Live Monitor</h1>
+            </div>
+            <div class="col-md-6 text-end">
+                <select id="tvStationSelect" class="form-select custom-select-light d-inline-block w-auto me-3">
+                    <option value="">-- Choose Display Feed --</option>
+                    <option value="clinic_aiu">Clinic AIU</option>
+                    <option value="clinic_medicare">Medicare Health</option>
+                    <option value="clinic_wellness">Wellness Family Clinic</option>
+                    <option value="bank_maybank">Maybank</option>
+                    <option value="bank_cimb">CIMB Bank</option>
+                    <option value="bank_public">Public Bank</option>
+                </select>
+                <span id="tvStationTitle" class="fs-4 fw-semibold text-primary">Station Feed Status</span>
+            </div>
+        </div>
+
+        <div class="row g-5">
+            <div class="col-xl-8 text-center">
+                <div class="p-5 border rounded-4 bg-light shadow-sm">
+                    <h2 class="display-4 fw-bold text-uppercase text-muted tracking-wide mb-3">Now Serving</h2>
+                    <div id="tvNumberDisplay" class="display-tv-num" style="font-size: 14rem; color: var(--brand-blue); font-weight: 900;">---</div>
+                    <h3 class="fw-bold text-success mt-3">👉 Please Proceed to Desk Counter Area 1</h3>
+                </div>
+            </div>
+
+            <div class="col-xl-4">
+                <div class="p-4 border rounded-4 bg-light shadow-sm h-100">
+                    <h3 class="fw-bold mb-4 text-muted text-uppercase small tracking-wider">Next Appointments</h3>
+                    
+                    <div class="d-flex flex-column gap-3">
+                        <div class="p-3 bg-white border rounded-3 d-flex justify-content-between align-items-center">
+                            <span class="fs-5 fw-semibold text-muted">Up Next</span>
+                            <h2 id="next1" class="fw-bold text-warning m-0">---</h2>
+                        </div>
+                        <div class="p-3 bg-white border rounded-3 d-flex justify-content-between align-items-center">
+                            <span class="fs-5 fw-semibold text-muted">Position 2</span>
+                            <h2 id="next2" class="fw-bold text-secondary m-0">---</h2>
+                        </div>
+                        <div class="p-3 bg-white border rounded-3 d-flex justify-content-between align-items-center">
+                            <span class="fs-5 fw-semibold text-muted">Position 3</span>
+                            <h2 id="next3" class="fw-bold text-secondary m-0">---</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="module">
+        import { db, doc, onSnapshot } from "./firebase-config.js";
+        
+        const tvStationSelect = document.getElementById("tvStationSelect");
+        const tvNumberDisplay = document.getElementById("tvNumberDisplay");
+        const tvStationTitle = document.getElementById("tvStationTitle");
+        const next1 = document.getElementById("next1");
+        const next2 = document.getElementById("next2");
+        const next3 = document.getElementById("next3");
+        
+        let tvUnsubscribe = null;
+
+        tvStationSelect.addEventListener("change", (e) => {
+            const id = e.target.value;
+            if (tvUnsubscribe) tvUnsubscribe();
+
+            if (id) {
+                tvStationTitle.textContent = tvStationSelect.options[tvStationSelect.selectedIndex].text;
+                tvUnsubscribe = onSnapshot(doc(db, "queues", id), (docSnap) => {
+                    if (docSnap.exists()) {
+                        const data = docSnap.data();
+                        const p = data.prefix;
+                        
+                        tvNumberDisplay.textContent = data.current === 0 ? "WAIT" : `${p}${String(data.current).padStart(3, '0')}`;
+                        
+                        next1.textContent = `${p}${String(data.current + 1).padStart(3, '0')}`;
+                        next2.textContent = `${p}${String(data.current + 2).padStart(3, '0')}`;
+                        next3.textContent = `${p}${String(data.current + 3).padStart(3, '0')}`;
+                    }
+                });
+            } else {
+                tvStationTitle.textContent = "Feed Terminated";
+                tvNumberDisplay.textContent = "---";
+                next1.textContent = "---"; next2.textContent = "---"; next3.textContent = "---";
+            }
+        });
+    </script>
+</body>
+</html>

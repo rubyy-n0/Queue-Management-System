@@ -1,0 +1,109 @@
+/* style.css */
+:root {
+    --brand-blue: #0f52ba;
+    --brand-yellow: #ffc72c;
+    --bg-light: #f8fafc;
+    --card-white: #ffffff;
+    --text-dark: #1e293b;
+    --text-muted: #64748b;
+}
+
+body {
+    background-color: var(--bg-light);
+    color: var(--text-dark);
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+}
+
+/* --- Premium Desktop Layouts --- */
+.navbar-clean {
+    background-color: var(--card-white);
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.desktop-hero-card {
+    background-color: var(--card-white);
+    border: 1px solid #e2e8f0;
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(15, 82, 186, 0.04);
+}
+
+/* Horizontal Category Tab Row */
+.category-tab-container {
+    display: flex;
+    gap: 12px;
+    background: #f1f5f9;
+    padding: 6px;
+    border-radius: 12px;
+}
+
+.category-tab-btn {
+    flex: 1;
+    padding: 12px 24px;
+    border: none;
+    background: transparent;
+    color: var(--text-muted);
+    font-weight: 600;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+}
+
+.category-tab-btn.active {
+    background-color: var(--card-white);
+    color: var(--brand-blue);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+/* --- Large Data Windows --- */
+.metric-box {
+    background-color: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 20px;
+}
+
+.large-queue-display {
+    font-size: 5rem;
+    font-weight: 800;
+    color: var(--brand-blue);
+    letter-spacing: -1px;
+}
+
+/* --- Inputs & Premium Buttons --- */
+.custom-select-light {
+    border: 2px solid #e2e8f0 !important;
+    padding: 12px !important;
+    border-radius: 10px !important;
+    font-size: 1rem;
+}
+
+.custom-select-light:focus {
+    border-color: var(--brand-blue) !important;
+    box-shadow: 0 0 0 4px rgba(15, 82, 186, 0.1) !important;
+}
+
+.btn-brand-primary {
+    background-color: var(--brand-blue);
+    color: #ffffff;
+    font-weight: 600;
+    padding: 14px 28px;
+    border-radius: 10px;
+    border: none;
+    transition: background-color 0.2s;
+}
+
+.btn-brand-primary:hover:not(:disabled) {
+    background-color: #0b3d8d;
+}
+
+.btn-brand-yellow {
+    background-color: var(--brand-yellow);
+    color: var(--text-dark);
+    font-weight: 700;
+    padding: 14px 28px;
+    border-radius: 10px;
+    border: none;
+}
+
+.btn-brand-yellow:hover:not(:disabled) {
+    background-color: #e5b220;
+}

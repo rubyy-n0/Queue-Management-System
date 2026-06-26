@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CloudQ - Ticket Window</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container py-4" style="max-width: 600px;">
+        
+        <!-- Header Profile Branding -->
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2 class="fw-bold m-0 text-white">Cloud<span class="text-warning">Q</span></h2>
+            <div class="text-end">
+                <small class="text-muted d-block">System Node</small>
+                <span class="badge bg-success bg-opacity-25 text-success border border-success border-opacity-25">Online</span>
+            </div>
+        </div>
+
+        <!-- Horizontal Category Nav Selector Grid -->
+        <div class="nav-icon-bar d-flex justify-content-between mb-4">
+            <div class="nav-item-custom active" data-category="clinic"><span>🏥</span>Clinic</div>
+            <div class="nav-item-custom" data-category="bank"><span>🏦</span>Bank</div>
+            <div class="nav-item-custom" data-category="restaurant"><span>🍔</span>Restaurant</div>
+            <div class="nav-item-custom" data-category="salon"><span>💇</span>Salon</div>
+        </div>
+
+        <!-- Business Dropdown Selector Form Card -->
+        <div class="custom-card p-4 mb-4">
+            <div class="mb-3">
+                <label class="form-label text-muted small fw-bold text-uppercase">Select Business Provider</label>
+                <select id="businessSelect" class="form-select form-select-lg form-select-dark">
+                    <!-- Loaded dynamically via JavaScript based on selected category -->
+                </select>
+            </div>
+            <button id="getTicketBtn" class="btn btn-yellow btn-lg w-100 py-3 text-uppercase mt-2">Get New Ticket</button>
+        </div>
+
+        <!-- Ticket Visual Token Monitor Card -->
+        <div id="ticketDisplay" class="custom-card p-4 text-center d-none">
+            <h4 id="displayBusinessName" class="fw-semibold text-white mb-3">---</h4>
+            
+            <div class="inner-display-box p-4 my-3">
+                <span class="text-muted text-uppercase small tracking-wider">Your Queue Number</span>
+                <div id="myNumber" class="display-queue-num">----</div>
+            </div>
+
+            <!-- Wait Info Metrics Grid -->
+            <div class="row g-2 text-center mt-3">
+                <div class="col-4">
+                    <div class="bg-black bg-opacity-20 p-2 rounded">
+                        <small class="text-muted d-block small">Now Serving</small>
+                        <span id="currentServing" class="fs-5 fw-bold text-warning">-</span>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="bg-black bg-opacity-20 p-2 rounded">
+                        <small class="text-muted d-block small">People Ahead</small>
+                        <span id="peopleAhead" class="fs-5 fw-bold text-white">-</span>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="bg-black bg-opacity-20 p-2 rounded">
+                        <small class="text-muted d-block small">Est. Wait</small>
+                        <span id="waitTime" class="fs-5 fw-bold text-info">-</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script type="module" src="app.js"></script>
+</body>
+</html>

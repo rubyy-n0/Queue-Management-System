@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CloudQ - TV Display Panel</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="tv-layout text-white d-flex flex-column justify-content-between p-5">
+
+    <!-- Top Feed Selection Menu -->
+    <div class="row mb-4">
+        <div class="col-md-4">
+            <select id="tvStationSelect" class="form-select form-select-dark">
+                <option value="">-- Choose Screen Target --</option>
+                <option value="clinic_aiu">Clinic AIU</option>
+                <option value="clinic_medicare">Medicare Health</option>
+                <option value="clinic_wellness">Wellness Family Clinic</option>
+                <option value="bank_maybank">Maybank</option>
+                <option value="bank_cimb">CIMB Bank</option>
+                <option value="bank_public">Public Bank</option>
+            </select>
+        </div>
+        <div class="col-md-8 text-end">
+            <h3 id="tvStationTitle" class="text-info fw-semibold m-0">Please Select Station Feed</h3>
+        </div>
+    </div>
+
+    <!-- Central Split Monitor Layout -->
+    <div class="row my-auto g-5">
+        <!-- Main Panel: Call Area -->
+        <div class="col-lg-8 text-center border-end border-secondary border-opacity-25">
+            <h1 class="display-4 fw-bold text-uppercase tracking-wider text-info">Now Serving</h1>
+            
+            <div class="tv-arrow-container my-4">
+                <div id="tvNumberDisplay" class="display-tv-num">---</div>
+            </div>
+
+            <h2 class="fw-bold mt-2 text-white text-opacity-70">Counter Desk 1</h2>
+        </div>
+
+        <!-- Side Panel: Up Next Queue Stack -->
+        <div class="col-lg-4 d-flex flex-column justify-content-center">
+            <div class="custom-card p-4">
+                <h4 class="text-muted text-uppercase small tracking-widest mb-4">Coming Up Next</h4>
+                <div class="d-flex flex-column gap-3">
+                    <div class="bg-black bg-opacity-40 p-3 rounded d-flex justify-content-between align-items-center">
+                        <span class="text-muted">Next inline</span>
+                        <h3 id="next1" class="text-warning fw-bold m-0">---</h3>
+                    </div>
+                    <div class="bg-black bg-opacity-40 p-3 rounded d-flex justify-content-between align-items-center">
+                        <span class="text-muted">Position 2</span>
+                        <h3 id="next2" class="text-white m-0">---</h3>
+                    </div>
+                    <div class="bg-black bg-opacity-40 p-3 rounded d-flex justify-content-between align-items-center">
+                        <span class="text-muted">Position 3</span>
+                        <h3 id="next3" class="text-white m-0">---</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer Banner Branding -->
+    <div class="border-top border-secondary border-opacity-25 pt-4 d-flex justify-content-between text-muted">
+        <span>CloudQ High-Performance Real-Time Monitoring Network</span>
+        <span id="liveTime">--:--:--</span>
+    </div>
+
+    <script type="module">
+        import { db, doc, onSnapshot } from "./firebase-config.js";
+        
+        const tvStationSelect = document.getElementById("tvStationSelect");
+        const tvNumberDisplay = document.getElementById("tvNumberDisplay");
+        const tvStationTitle = document.getElementById("tvStationTitle");
+        const next1 = document.getElementById("next1");
+        const next2 = document.getElementById("next2");
+        const next3 = document.getElementById("next3");
+        
+        let tvUnsubscribe = null;
+
+        tvStationSelect.addEventListener("change", (e) => {
+            const id = e.target.value;
+            if (tvUnsubscribe) tvUnsubscribe();
+
+            if (id) {
+                tvStationTitle.textContent = tvStationSelect.options[tvStationSelect.selectedIndex].text;
+                tvUnsubscribe = onSnapshot(doc(db, "queues", id), (docSnap) => {
+                    if (docSnap.exists()) {
+                        const data = docSnap.data();
+                        const p = data.prefix;
+                        
+                        // Set active counter display
+                        tvNumberDisplay.textContent = data.current === 0 ? "WAIT" : `${p}${String(data.current).padStart(3, '0')}`;
+                        
+                        // Project upcoming list values
+                        const currentNext = data.next;
+                        next1.textContent = `${p}${String(data.current + 1).padStart(3, '0')}`;
+                        next2.textContent = `${p}${String(data.current + 2).padStart(3, '0')}`;
+                        next3.textContent = `${p}${String(data.current + 3).padStart(3, '0')}`;
+                    }
+                });
+            } else {
+                tvStationTitle.textContent = "Please Select Station Feed";
+                tvNumberDisplay.textContent = "---";
+                next1.textContent = "---"; next2.textContent = "---"; next3.textContent = "---";
+            }
+        });
+
+        // Simple Clock Display
+        setInterval(() => {
+            document.getElementById('liveTime').textContent = new Date().toLocaleTimeString();
+        }, 1000);
+    </script>
+</body>
+</html>

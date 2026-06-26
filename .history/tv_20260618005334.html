@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CloudQ - TV Monitor Display</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="tv-display d-flex align-items-center">
+    <div class="container text-center">
+        <div class="row mb-5">
+            <div class="col">
+                <label class="text-muted text-uppercase tracking-wide h5">Select Station Feed</label>
+                <select id="tvStationSelect" class="form-select form-select-lg mx-auto w-50 bg-dark text-light border-secondary mt-2">
+                    <option value="">-- Select Display Feed --</option>
+                    <option value="clinic_aiu">Clinic AIU Screen</option>
+                    <option value="bank_maybank">Maybank Service Screen</option>
+                    <option value="restaurant_mamak">Mamak Kitchen Screen</option>
+                    <option value="salon_beauty">Beauty Salon Screen</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="row justify-content-center">
+            <div class="col-md-8 bg-black p-5 rounded-4 shadow-lg border border-secondary">
+                <h1 class="display-4 fw-bold text-muted text-uppercase">NOW SERVING</h1>
+                <div id="tvNumberDisplay" class="tv-number my-4">---</div>
+                <div class="h3 text-success fw-semibold border-top border-secondary pt-4">
+                    Please proceed to counter area
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="module">
+        import { db, doc, onSnapshot } from "./firebase-config.js";
+        
+        const tvStationSelect = document.getElementById("tvStationSelect");
+        const tvNumberDisplay = document.getElementById("tvNumberDisplay");
+        let tvUnsubscribe = null;
+
+        tvStationSelect.addEventListener("change", (e) => {
+            const id = e.target.value;
+            if (tvUnsubscribe) tvUnsubscribe();
+
+            if (id) {
+                tvUnsubscribe = onSnapshot(doc(db, "queues", id), (docSnap) => {
+                    if (docSnap.exists()) {
+                        const data = docSnap.data();
+                        if (data.current === 0) {
+                            tvNumberDisplay.textContent = "WAIT";
+                        } else {
+                            tvNumberDisplay.textContent = `${data.prefix}${String(data.current).padStart(3, '0')}`;
+                        }
+                    }
+                });
+            } else {
+                tvNumberDisplay.textContent = "---";
+            }
+        });
+    </script>
+</body>
+</html>

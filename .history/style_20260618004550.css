@@ -1,0 +1,117 @@
+/* style.css */
+:root {
+    --bg-dark: #071126;
+    --panel-blue: #0f2042;
+    --neon-yellow: #ffc107;
+    --neon-cyan: #26d0ce;
+    --text-light: #e2e8f0;
+}
+
+body {
+    background-color: var(--bg-dark);
+    color: var(--text-light);
+    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    overflow-x: hidden;
+}
+
+/* --- Navigation & Icons Bar --- */
+.nav-icon-bar {
+    background-color: #0b1a36;
+    border-radius: 12px;
+    padding: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.nav-item-custom {
+    color: #64748b;
+    cursor: pointer;
+    text-align: center;
+    font-size: 0.8rem;
+    transition: all 0.2s ease;
+}
+
+.nav-item-custom.active, .nav-item-custom:hover {
+    color: var(--neon-yellow);
+}
+
+.nav-item-custom i, .nav-item-custom span {
+    display: block;
+    font-size: 1.2rem;
+    margin-bottom: 2px;
+}
+
+/* --- Cards & Panels --- */
+.custom-card {
+    background-color: var(--panel-blue);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.inner-display-box {
+    background: linear-gradient(180deg, #132a54 0%, #0a1833 100%);
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* --- Typography & Numbers --- */
+.display-queue-num {
+    font-size: 4.5rem;
+    font-weight: 800;
+    color: var(--neon-yellow);
+    text-shadow: 0 0 15px rgba(255, 193, 7, 0.3);
+    letter-spacing: 2px;
+}
+
+.display-tv-num {
+    font-size: 11rem;
+    font-weight: 900;
+    color: var(--neon-yellow);
+    text-shadow: 0 0 30px rgba(255, 193, 7, 0.4);
+    line-height: 1;
+}
+
+/* --- Custom Inputs & Buttons --- */
+.form-select-dark {
+    background-color: #09162e !important;
+    color: #fff !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+.form-select-dark:focus {
+    border-color: var(--neon-cyan) !important;
+    box-shadow: 0 0 0 0.25rem rgba(38, 208, 206, 0.2) !important;
+}
+
+.btn-yellow {
+    background-color: var(--neon-yellow);
+    color: #071126;
+    font-weight: 700;
+    border-radius: 8px;
+    border: none;
+    letter-spacing: 0.5px;
+    transition: transform 0.1s ease;
+}
+
+.btn-yellow:hover:not(:disabled) {
+    background-color: #e0a800;
+    transform: translateY(-1px);
+}
+
+.btn-yellow:disabled {
+    background-color: #1e293b;
+    color: #475569;
+}
+
+/* --- TV Layout Extras --- */
+.tv-layout {
+    background-color: #030712;
+    min-height: 100vh;
+}
+
+.tv-arrow-container {
+    position: relative;
+    background: linear-gradient(90deg, rgba(255,193,7,0.05) 0%, rgba(255,193,7,0.2) 100%);
+    border-radius: 8px;
+    padding: 20px;
+}
