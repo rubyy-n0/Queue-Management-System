@@ -54,7 +54,7 @@ Queue-Management-System/
 1. Clone the repository.
 
 ```bash
-git clone https://github.com/your-username/Queue-Management-System.git
+git clone https://github.com/rubyy-n0/Queue-Management-System.git
 ```
 
 2. Open the project folder.
@@ -99,7 +99,7 @@ The application is deployed using:
 ## Contributors
 
 - Hnin Shwe Yee Htun
-- Your Name
+- Moe Thuzar Win
 
 ---
 
